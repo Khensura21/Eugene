@@ -22,11 +22,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    portfolio: {
+    portfolio_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Portfolio"
-    },
-    wallet: {
+      },
+    wallet_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Wallet"
     }
@@ -35,12 +35,11 @@ const userSchema = new mongoose.Schema({
 // this hook hashes user password
 userSchema.pre("save", async function(next) {
     try {
-        if (this.isModified("password")) {
+        if (!this.isModified("password")) {
             return next();
         }
         let hashedPassword = await bcrypt.hash(this.password, 10);
         this.password = hashedPassword;
-        console.log(userSchema);
         return next(); 
     } catch (err) {
         return next(err); // goes to custom err handler we defined
@@ -48,7 +47,7 @@ userSchema.pre("save", async function(next) {
 });
 
 // password comparison function
-userSchema.method.comparePassword = async function(candidatePassword, next) {
+userSchema.methods.comparePassword = async function(candidatePassword, next) {
     try {
         let isMatch = await bcrypt.compare(candidatePassword, this.password)
         return isMatch;

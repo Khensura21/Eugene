@@ -4,14 +4,17 @@ const mongoose = require("mongoose");
 const PortfolioSchema = new mongoose.Schema({
     stocks: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Stock'
+        ref: 'Stock',
+        default: []
     }],
     transactions: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Transaction'
+        ref: 'Transaction',
+        default: []
     }],
     user: {
-
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }
 });
 

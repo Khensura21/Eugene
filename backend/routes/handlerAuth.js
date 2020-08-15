@@ -9,40 +9,41 @@ var db = require('../models'),
 
 
 exports.signin = async function (req, res, next) {
+    console.log("starting sign in function");
     // if all matches
     //log them in
     try {
         //finding a user
-        let user = await db.User.find({
+        let user = await db.User.findOne({
             email: req.body.email
         });
-        let {
-            id,
-            firstName
-        } = user;
+        let { id, firstName, email } = user;
         //checkin if their password match the hashed pw
-        let isMatch = await user.comparePassWord(req.body.password);
+        console.log(`user unHashed password is ${req.body.password}`)
+        let isMatch = await user.comparePassword(req.body.password);
+        console.log(`match is ${isMatch}`)
         if (isMatch) {
-            let token = jwt.sign({
+            let token = jwt.sign(
+                {
                     id,
                     firstName,
-                    lastName
+                    email
                 },
                 process.env.SECRET_KEY
             );
             return res.status(200).json({
                 id,
                 firstName,
-                lastName,
+                email,
                 token
-            })
+            });
         } else {
+            console.log("something went wrong =/");
             return next({
                 status: 400,
                 message: "Invalid Email/Password."
             })
         }
-
     } catch (err) {
         return next({
             status: 400,
@@ -52,7 +53,6 @@ exports.signin = async function (req, res, next) {
 };
 
 exports.signup = async function (req, res, next) {
-    console.log("starting signup function");
     try {
         //create user
         // create a token (signing a token)
@@ -85,7 +85,6 @@ exports.signup = async function (req, res, next) {
         if (err.code === 11000) {
             err.message = "Sorry, that username or email is taken";
         }
-        console.log(err);
         return next({
             status: 400,
             message: err.message
