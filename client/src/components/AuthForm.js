@@ -26,7 +26,8 @@ class AuthForm extends Component {
                                 type="text" 
                                 name="email" 
                                 onChange={this.handleChange} 
-                                value={email}/>
+                                value={email}
+                            />
                             <label htmlFor="password">Password</label>
                             <input className="form-control" type="password" name="password" onChange={this.handleChange} />
                         </form>
