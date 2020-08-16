@@ -3,7 +3,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { signup, signin } = require("./handlerAuth");
+const { signup, signin } = require("../auth/strategies/jwt");
  
 router.post("/signup", signup);
 router.post("/signin", signin);

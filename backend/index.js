@@ -1,19 +1,34 @@
 
 require('dotenv').config(); //loads all of our env variables
-const express = require('express'),
-  app = express(),
-  cors = require("cors"),
-  bodyParser = require('body-parser'),
-  passport = require('passport'),
-  errorHandler = require('./error'),
-  authRoutes = require('./routes/auth'),
-  PORT = 8080;
+const bodyParser = require("body-parser"),
+      CORS = require("cors"),
+      express = require('express'),
+      errorHandler = require('./utils/errorerror'),
+      logger = require('morgan'),
+      passport = require("passport"),
+      path = require('path'),
+      PORT = 8080,
+      session = require("express-session");
 
-//require('./passportGoogleStrategy');
 
-app.use(cors());
+const apiRouter = require("./routes/api/"),
+      authRouter = require("./routes/auth"),
+      indexRouter = require('./routes/index'),
+      jwtAuthRoutes = require('./routes/jwtAuth'),
+      usersRouter = require('./routes/users');
+
+
+
+      require("./database/index");
+
+      const User = require("./database/schema/user");
+      
+      const app = express();
+      
+
+
+app.use(CORS());
 app.use(bodyParser.json());
-
 app.use('/api/auth', authRoutes);
 
 // app.use(passport.initialize());
@@ -42,3 +57,38 @@ app.use(function (req, res, next) {
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log("app is listening on PORT 8080"))
+
+
+
+
+// require("./database/index");
+
+// const User = require("./database/schema/user");
+
+// const app = express();
+
+// // require("./passport-setup");
+// const { strategy } = require("./auth/strategies/google");
+// strategy(app);
+
+
+// app.use(logger('dev'));
+// app.use(CORS());
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: true,
+//     saveUninitialized: true
+//   })
+// );
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+// app.use("/auth", authRouter);
+// app.use("/api", apiRouter);
+// process.on('warning', e => console.warn(e.stack));
+
+// module.exports = app;
