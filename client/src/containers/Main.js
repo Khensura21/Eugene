@@ -25,7 +25,12 @@ const Main = (props) => (
                 path="/signup" 
                 render={props => {
                     return (
-                        <AuthForm buttonText="Sign me up!" heading="Join Eugene Today" {...props} />
+                        <AuthForm 
+                        signUp
+                        buttonText="Sign me up!" 
+                        heading="Join Eugene Today" 
+                        {...props} 
+                        />
                     );
                 }}
             />

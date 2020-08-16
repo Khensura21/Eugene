@@ -10,10 +10,16 @@ class AuthForm extends Component {
             password: ""
         }
     }
+
+    handleChange = e => {
+        this.setState({
+            [e.state.name]: e.target.value
+        });
+    }
  
     render() {
         const { email, firstName, lastName, password } = this.state;
-        const { heading, buttonText } = this.props;
+        const { heading, buttonText, signUp } = this.props;
         return (
             <div>
                 <div className="row justify-content-md-center text-center">
@@ -24,12 +30,59 @@ class AuthForm extends Component {
                             <input 
                                 className="form-control"
                                 type="text" 
+                                id="email"
                                 name="email" 
                                 onChange={this.handleChange} 
                                 value={email}
                             />
                             <label htmlFor="password">Password</label>
-                            <input className="form-control" type="password" name="password" onChange={this.handleChange} />
+                            <input 
+                                className="form-control"
+                                type="password" 
+                                id="password"
+                                name="password" 
+                                onChange={this.handleChange} 
+                            />
+                            {signUp && (
+                                <div>
+                                <label htmlFor="firstname">First Name:</label>
+                                <input  
+                                    className="form-control"
+                                    type="text" 
+                                    id="firstname"
+                                    name="firstname" 
+                                    onChange={this.handleChange} 
+                                    value={firstName}
+                                />
+                                <label htmlFor="lastname">Last Name:</label>
+                                <input  
+                                    className="form-control"
+                                    type="text" 
+                                    id="lastname"
+                                    name="lastname" 
+                                    onChange={this.handleChange} 
+                                    value={lastName}
+                                />
+                                <label htmlFor="email">Email:</label>
+                                <input 
+                                    className="form-control"
+                                    type="text" 
+                                    id="email"
+                                    name="email" 
+                                    onChange={this.handleChange} 
+                                    value={email}
+                                />
+                                <label htmlFor="password">Password:`</label>
+                                <input 
+                                    className="form-control"
+                                    type="password" 
+                                    id="password"
+                                    name="password" 
+                                    onChange={this.handleChange} 
+                                />
+                                </div>
+                             )
+                            }
                         </form>
                     </div>
                 </div>
