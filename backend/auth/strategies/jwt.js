@@ -4,7 +4,7 @@
 require('dotenv').config({
     path: '../.env'
 });
-var db = require('../../models'),
+var db = require('../../models/schema'),
     jwt = require('jsonwebtoken');
 
 

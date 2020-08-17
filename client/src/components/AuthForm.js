@@ -57,8 +57,8 @@ class AuthForm extends Component {
                                 <input  
                                     className="form-control"
                                     type="text" 
-                                    id="firstname"
-                                    name="firstname" 
+                                    id="firstName"
+                                    name="firstName" 
                                     onChange={this.handleChange} 
                                     value={firstName}
                                 />
@@ -66,8 +66,8 @@ class AuthForm extends Component {
                                 <input  
                                     className="form-control"
                                     type="text" 
-                                    id="lastname"
-                                    name="lastname" 
+                                    id="lastName"
+                                    name="lastName" 
                                     onChange={this.handleChange} 
                                     value={lastName}
                                 />
