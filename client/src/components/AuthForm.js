@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { removeError } from "../store/actions/errors";
 
 class AuthForm extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class AuthForm extends Component {
             [e.target.name]: e.target.value
         });
     }
+
     handleSubmit = e => {
        e.preventDefault();
        //may have to change this below to also account for google OAuth button
@@ -24,16 +26,24 @@ class AuthForm extends Component {
            console.log("succesfully, signed in!")
        });
     }
- 
+
+    
     render() {
         const { email, firstName, lastName, password } = this.state;
-        const { heading, buttonText, signUp } = this.props;
+        const { heading, buttonText, signUp, errors, history, removeError} = this.props;
+
+        history.listen(() => {
+            removeError();
+        });
         return (
             <div>
                 <div className="row justify-content-md-center text-center">
                     <div className="col-md-6">
                         <form onSubmit={this.handleSubmit}>
                             <h2>{heading}</h2>
+                            {errors.message && (
+                                <div className="alert alert-danger">{errors.message}</div>
+                            )}
                             <label htmlFor="email">Email:</label>
                             <input 
                                 className="form-control"
