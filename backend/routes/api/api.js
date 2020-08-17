@@ -1,38 +1,38 @@
-const { response } = require("../app");
+const {
+  extractPrice,
+  extractIndexAsString,
+  mapQueryToAlphaVantageAPI
+} = require("../../utils/index");
 
-const axios = require("axios"),
-      date = require("date-and-time"),
-      router = require("express").Router();
 
+async function stockOpenAPI(req, res) {
+  let queryParams = mapQueryToAlphaVantageAPI({ ...req.query, when: "open" });
+  
+  let openPrice = await extractPrice(
+    queryParams,
+    extractIndexAsString(queryParams)
+  );
 
-const AV_API_BASE_URL = "https://www.alphavantage.co/query?";
+  res.json({
+    "open": openPrice["1. open"]
+  });
+};
 
-// extract to utility folder
-function buildAlphaVantageQuery({ aVFunction, symbol }) {
-  return `${AV_API_BASE_URL}function=${aVFunction}&symbol=${symbol}&outputsize=compact&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
+async function stockCurrentAPI(req, res) {
+  let queryParams = mapQueryToAlphaVantageAPI({ ...req.query, when: "current" });
+  
+  let currentPrice = await extractPrice(
+    queryParams,
+    extractIndexAsString(queryParams)
+  )
+  
+  res.json({
+    "current": currentPrice["1. open"]
+  });
 }
 
-function buildTimeSeriesIntraDayQuery({ symbol }) {
-  return `${AV_API_BASE_URL}function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=1min&outputsize=compact&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
-}
 
-async function extractCurrentPrice({ symbol }) {
-  const stockInfoRequest = buildTimeSeriesIntraDayQuery({ symbol });
-  const response = await axios.get(stockInfoRequest);
-  const stockData = response.data; // error can happen here
-  const lastRefreshed = stockData["Meta Data"]["3. Last Refreshed"];
-  const mostRecentPrice = stockData["Time Series (1min)"][lastRefreshed] // dependent upon interval -- fix this -- make modular
-  return mostRecentPrice;
-}
-
-// Client makes a request to buy --> backend responds by querying API for stock info if request is valid
-// --> if request is valid, we find the current user in our database and update their account
-// with the info they requested by querying API to get it's price
-router.get("/stockinfo", async (req, res) => {
-  const mostRecentPrice = await extractCurrentPrice(req.query); // add some validation here `Error Message`
-  res.json({ mostRecentPrice });
-})
-
-
-
-module.exports = router;
+module.exports = {
+  stockCurrentAPI,
+  stockOpenAPI
+};

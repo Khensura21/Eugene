@@ -1,11 +1,11 @@
 // require("./db/index");
 const passport = require("passport");
-const { create } = require("./database/schema/user");
-const User = require("./database/schema/user");
+const { create } = require("./models/schema/user");
+const User = require("./models/schema/user");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const createUser = require("./database/user").createUser;
-const createPortfolio = require("./database/portfolio").createPortfolio;
-const createWallet = require("./database/wallet").createWallet;
+const createUser = require("./models/user").createUser;
+const createPortfolio = require("./models/portfolio").createPortfolio;
+const createWallet = require("./models/wallet").createWallet;
 const to = require("await-to-js").to;
 
 

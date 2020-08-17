@@ -1,6 +1,6 @@
 const router = require("express").Router(),
       passport = require("passport");
-const User = require("../database/schema/user");
+const User = require("../models/schema/user");
 
 
 function isAuthenticated(req,res,next) {

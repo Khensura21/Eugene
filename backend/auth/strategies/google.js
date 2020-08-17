@@ -1,13 +1,10 @@
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const passport = require('passport');
-
 const passport = require("passport"),
       passportGoogle = require("passport-google-oauth20");
 
-const { getUserByProviderId, createUser } = '../../database/user'
-const { signToken } = '../utils'
+const { getUserByProviderId, createUser } = '../../models/user'
+//const { signToken } = '../utils'
 
-const GoogleStrategy = passportGoogle.OAuth2Strategy
+const GoogleStrategy = passportGoogle.Strategy;
 
 const strategy = app => {
   const strategyOptions = {
@@ -17,55 +14,69 @@ const strategy = app => {
   }
 
   const verifyCallback = async (accessToken, refreshToken, profile, done) => {
-    let [err, user] = await to(getUserByProviderId(profile.id))
-    if (err || user) {
-      return done(err, user)
-    }
+    let [euerr, existingUser] = await to( getUserByEmail(profile._json.email) );
+    if (existingUser) { return done(euerr, existingUser); }
 
-    const verifiedEmail =
-      profile.emails.find(email => email.verified) || profile.emails[0]
-
-    const [createdError, createdUser] = await to(
+    let [uerr, user] = await to(
       createUser({
-        provider: profile.provider,
-        providerId: profile.id,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-        displayName: profile.displayName,
-        email: verifiedEmail.value,
-        password: null
+        email: profile._json.email,
+        firstName: profile._json.given_name,
+        lastName: profile._json.family_name,
+        isVerified: profile._json.email_verified
       })
-    )
+    );
 
-    return done(createdError, createdUser)
+    let [werr, wallet] = await to( createWallet({ user_id: user._id }) );
+    if (werr) return done(werr, null);
+
+    let [perr, portfolio] = await to( createPortfolio({ user_id: user._id }) );
+    if (perr) return done(perr, null);
+
+    user = await User.findOneAndUpdate(
+      { email: profile._json.email },
+      { wallet_id: wallet._id, portfolio_id: portfolio._id }
+    );
+
+    return done(uerr, user);
   }
 
-  passport.use(new GoogleStrategy(strategyOptions, verifyCallback))
+  passport.use(new GoogleStrategy(strategyOptions, verifyCallback));
+
+  passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
+  
+  passport.deserializeUser(function(user, done) {
+    done(null, user);
+  });
 
   app.get(
-    `${process.env.BASE_API_URL}/auth/google`,
-    passport.authenticate('google', {
+    `${process.env.SERVER_API_URL}/auth/google`,
+    passport.authenticate("google", {
       scope: [
-        'https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email'
+        "profile",
+        "email"
       ]
     })
-  )
+  );
 
   app.get(
-    `${process.env.BASE_API_URL}/auth/google/callback`,
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    `${process.env.SERVER_API_URL}/auth/google/callback`,
+    passport.authenticate("google", { failureRedirect: "/login" }),
     (req, res) => {
       return res
         .status(200)
-        .cookie('jwt', signToken(req.user), {
+        .cookie("jwt", signToken(req.user), {
           httpOnly: true
         })
-        .redirect('/')
+        .redirect("/")
     }
-  )
+  );
 
-  return app
+  return app;
 }
 
-export { strategy }
+
+module.exports = {
+  strategy
+};
