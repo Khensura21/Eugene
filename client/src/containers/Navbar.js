@@ -26,10 +26,10 @@ class Navbar extends Component {
                             <Link to={`/users/${this.props.currentUser.user.id}/transactions/new`}> Buy Stock!</Link>
 
                         </li>
-                        <li>
+                        {/* <li>
                             <Link to={`/users/${this.props.currentUser.user.id}/portfolio/`}> Portfolio </Link>
                             
-                        </li>
+                        </li> */}
                         <li>
                             <Link to={`/users/${this.props.currentUser.user.id}/transactions/`}> Transactions </Link>
                             
