@@ -24,6 +24,15 @@ class Navbar extends Component {
                     <ul className="nav-navbar-nav navbar-right">
                         <li>
                             <Link to={`/users/${this.props.currentUser.user.id}/transactions/new`}> Buy Stock!</Link>
+
+                        </li>
+                        <li>
+                            <Link to={`/users/${this.props.currentUser.user.id}/portfolio/`}> Portfolio </Link>
+                            
+                        </li>
+                        <li>
+                            <Link to={`/users/${this.props.currentUser.user.id}/transactions/`}> Transactions </Link>
+                            
                         </li>
                         <li>
                             <a onClick={this.logout}> Log out </a>

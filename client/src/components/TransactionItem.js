@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Moment from 'react-moment';
 import { Link } from "react"
 
@@ -19,7 +19,7 @@ class TransactionItem extends Component {
             <tr key= {key}>
             <td className="transactions-table-data type">BUY</td>
             <td className="transactions-table-data ticker-symbol">({symbol})</td>
-            <td className="transactions-table-data num-shares">{shares} {sharesText} &#64;</td>
+            <td className="transactions-table-data num-shares">{quantity} {sharesText} @</td>
             <td className="transactions-table-data price">{convertToUsdCurrency.format(transactionPrice)} </td>
             </tr>
         );

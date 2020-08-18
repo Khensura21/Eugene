@@ -1,5 +1,3 @@
-// a generic way to make an AJAX request
-
 import axios from "axios"
 
 // functionality to attach token to any request when a user logs iin

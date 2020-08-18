@@ -1,4 +1,4 @@
-import { apiCall } from "../../services/apiCall";
+import { apiCall } from "../../services/api";
 import { addError } from "./errors";
 import { LOAD_TRANSACTIONS, REMOVE_TRANSACTIONS }  from "../actionTypes";
 
@@ -11,7 +11,7 @@ export const loadTransactions = transactions => ({
 //api call to load transactions
 export const fetchTransactions = () => {
     return dispatch => {
-        return apiCall("GET", "/transactions")
+        return apiCall("get", "/transactions")
             .then(res => dispatch(loadTransactions(res))
             .catch(err => addError(err.message))
         );

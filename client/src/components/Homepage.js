@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TranacstionList from "./TransactionList";
+import TransactionList from "./TransactionList";
 
 const Homepage = ({ currentUser }) => {
     if (!currentUser.isAuthenticated) {
@@ -16,9 +16,9 @@ const Homepage = ({ currentUser }) => {
     }
     return (
         <>
-        <header className="page-header"> Transactions</header>
+        <h1 className="page-header"> Transactions</h1>
         <div className="transaction-outer-container">
-            <TranactionList />
+            <TransactionList />
         </div>
         </>
     )
