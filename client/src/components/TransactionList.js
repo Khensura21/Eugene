@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Transactions from "../containers/Transactions";
+import Transactions from "../containers/Transactions.js";
 
 const TransactionList = (props) => {
     return (

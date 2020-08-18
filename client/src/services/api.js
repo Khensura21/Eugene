@@ -2,7 +2,7 @@
 
 import axios from "axios"
 
-
+// functionality to attach token to any request when a user logs iin
 export function setTokenHeader(token) {
     if (token) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
