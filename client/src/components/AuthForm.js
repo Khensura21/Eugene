@@ -19,18 +19,23 @@ class AuthForm extends Component {
     }
 
     handleSubmit = e => {
-       e.preventDefault();
-       //may have to change this below to also account for google OAuth button
-       const authType= this.props.signUp ? "signup": "signin";
-       this.props.onAuth(authType, this.state).then(() => {
-           console.log("succesfully, signed in!")
-       });
+        e.preventDefault();
+        //may have to change this below to also account for google OAuth button
+        const authType = this.props.signUp ? "signup" : "signin";
+        this.props
+        .onAuth(authType, this.state)
+        .then(() => {
+            console.log("succesfully, signed in!")
+            this.props.history.push("/")
+        }).catch(() => {
+            return;
+        })
     }
 
-    
+
     render() {
         const { email, firstName, lastName, password } = this.state;
-        const { heading, buttonText, signUp, errors, history, removeError} = this.props;
+        const { heading, buttonText, signUp, errors, history, removeError } = this.props;
 
         history.listen(() => {
             removeError();
@@ -45,44 +50,44 @@ class AuthForm extends Component {
                                 <div className="alert alert-danger">{errors.message}</div>
                             )}
                             <label htmlFor="email">Email:</label>
-                            <input 
+                            <input
                                 className="form-control"
-                                type="text" 
+                                type="text"
                                 id="email"
-                                name="email" 
-                                onChange={this.handleChange} 
+                                name="email"
+                                onChange={this.handleChange}
                                 value={email}
                             />
                             <label htmlFor="password">Password</label>
-                            <input 
+                            <input
                                 className="form-control"
-                                type="password" 
+                                type="password"
                                 id="password"
-                                name="password" 
-                                onChange={this.handleChange} 
+                                name="password"
+                                onChange={this.handleChange}
                             />
                             {signUp && (
                                 <div>
-                                <label htmlFor="firstname">First Name:</label>
-                                <input  
-                                    className="form-control"
-                                    type="text" 
-                                    id="firstName"
-                                    name="firstName" 
-                                    onChange={this.handleChange} 
-                                    value={firstName}
-                                />
-                                <label htmlFor="lastname">Last Name:</label>
-                                <input  
-                                    className="form-control"
-                                    type="text" 
-                                    id="lastName"
-                                    name="lastName" 
-                                    onChange={this.handleChange} 
-                                    value={lastName}
-                                />
+                                    <label htmlFor="firstname">First Name:</label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        id="firstName"
+                                        name="firstName"
+                                        onChange={this.handleChange}
+                                        value={firstName}
+                                    />
+                                    <label htmlFor="lastname">Last Name:</label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        id="lastName"
+                                        name="lastName"
+                                        onChange={this.handleChange}
+                                        value={lastName}
+                                    />
                                 </div>
-                             )
+                            )
                             }
                             <button type="submit" className="btn btn-primary btn-block btn-lg">
                                 {buttonText}
@@ -91,8 +96,8 @@ class AuthForm extends Component {
                     </div>
                 </div>
             </div>
-        )  
-    }            
+        )
+    }
 }
 
 export default AuthForm

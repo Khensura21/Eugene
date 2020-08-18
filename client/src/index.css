@@ -50,11 +50,12 @@ ul.nav.navbar-nav li {
   align-items: center;
   justify-content: center;
   z-index: -1;
-  /* background-image: url(); */
+  background-image: url("./images/eugene-bg.jpg");
   text-align: center;
   padding: 1rem;
   background-position: center center;
   background-size: cover;
+  opacity: .97;
   color: white;
-  text-shadow: 0 0 7px #000000;
+  text-shadow: 0 0 9px #000000;
 }
