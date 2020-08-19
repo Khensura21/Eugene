@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import TransactionList from "./TransactionList";
 
 const Homepage = ({ currentUser }) => {
-    if (!currentUser.isAuthenticated) {
+    if (currentUser.isAuthenticated === false) {
         return (
             <div className="home-hero">
                 <h1> What's Up! </h1>
@@ -15,12 +15,9 @@ const Homepage = ({ currentUser }) => {
         );
     }
     return (
-        <>
-        <h1 className="page-header"> Transactions</h1>
-        <div className="transaction-outer-container">
-            <TransactionList />
+        <div>
+              <TransactionList />
         </div>
-        </>
     )
 };
 

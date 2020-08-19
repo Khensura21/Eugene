@@ -7,7 +7,7 @@ const bodyParser = require("body-parser"),
       logger = require('morgan'),
       passport = require("passport"),
       path = require('path'),
-      PORT = 8080,
+      PORT = process.env.PORT,
       session = require("express-session");
 
 

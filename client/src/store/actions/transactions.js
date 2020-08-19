@@ -1,6 +1,6 @@
 import { apiCall } from "../../services/api";
 import { addError } from "./errors";
-import { LOAD_TRANSACTIONS, REMOVE_TRANSACTIONS }  from "../actionTypes";
+import { LOAD_TRANSACTIONS }  from "../actionTypes";
 
 
 export const loadTransactions = transactions => ({

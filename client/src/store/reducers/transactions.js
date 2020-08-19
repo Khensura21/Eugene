@@ -8,4 +8,4 @@ const transactions = (state = [], action) => {
             return state;
     }
 }
-export default transactions;
+export default transactions

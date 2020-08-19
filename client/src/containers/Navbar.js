@@ -9,6 +9,7 @@ import Logo from "../images/eugene-logo.png";
 class Navbar extends Component {
     logout = e => {
         e.preventDefault();
+        //this.props.history.push("/signin")
         this.props.logout();
     }
     render () {
@@ -23,15 +24,11 @@ class Navbar extends Component {
                 {this.props.currentUser.isAuthenticated ? (
                     <ul className="nav-navbar-nav navbar-right">
                         <li>
-                            <Link to={`/users/${this.props.currentUser.user.id}/transactions/new`}> Buy Stock!</Link>
+                            <Link to={`/users/${this.props.currentUser.user.id}/portfolio/`}> Buy Stock!</Link>
 
                         </li>
-                        {/* <li>
-                            <Link to={`/users/${this.props.currentUser.user.id}/portfolio/`}> Portfolio </Link>
-                            
-                        </li> */}
                         <li>
-                            <Link to={`/users/${this.props.currentUser.user.id}/transactions/`}> Transactions </Link>
+                        <Link to="/users/:id/transactions/" > Transactions </Link> 
                             
                         </li>
                         <li>

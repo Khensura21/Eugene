@@ -9,6 +9,8 @@ import AuthForm from "../components/AuthForm";
 import { authUser } from "../store/actions/auth";
 import { removeError } from "../store/actions/errors";
 import withAuth from "../hocs/withAuth";
+import TransactionList from "../components/TransactionList";
+import Portfolio from "../components/Portfolio";
 
 const Main = (props) => {
     const { authUser, errors, removeError, currentUser} = props
@@ -16,6 +18,20 @@ const Main = (props) => {
     <div className="container">
         <Switch>
             <Route exact path="/" render={ props => <Homepage currentUser={currentUser} {...props} />} />
+            <Route 
+                exact
+                path="/users/:id/transactions/" 
+                currentUser={currentUser}
+                component={withAuth(TransactionList)} 
+                // render={props => {
+                //     return (
+                //         <TransactionList 
+                //             currentUser={currentUser} 
+                //             {...props} 
+                //         /> 
+                //     ) 
+                // }}
+            />    
             <Route 
                 exact 
                 path="/signin" 
@@ -50,7 +66,8 @@ const Main = (props) => {
                 }}
             />
             <Route 
-                path="/users/:id/transactions/new"
+                path="/users/:id/portfolio/"
+                currentUser={currentUser}
                 component={withAuth(Portfolio)} 
              />
         </Switch>

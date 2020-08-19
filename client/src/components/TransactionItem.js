@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Moment from 'react-moment';
-import { Link } from "react"
 
 
 class TransactionItem extends Component {

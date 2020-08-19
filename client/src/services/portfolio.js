@@ -11,4 +11,4 @@ function getPricesHelper() {}
  getPrices(tickerSymbols)
 
   // get the latest prices for all symbols from the API
-  function fetchStocks(tickerSymbols)
+function fetchStocks(tickerSymbols)
