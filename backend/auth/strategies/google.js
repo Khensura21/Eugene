@@ -51,7 +51,7 @@ const strategy = app => {
   });
 
   app.get(
-    `${process.env.SERVER_API_URL}/auth/google`,
+    `/auth/google`,
     passport.authenticate("google", {
       scope: [
         "profile",
@@ -61,7 +61,7 @@ const strategy = app => {
   );
 
   app.get(
-    `${process.env.SERVER_API_URL}/auth/google/callback`,
+    `/auth/google/callback`,
     passport.authenticate("google", { failureRedirect: "/login" }),
     (req, res) => {
       return res

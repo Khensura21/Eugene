@@ -59,3 +59,8 @@ ul.nav.navbar-nav li {
   color: white;
   text-shadow: 0 0 9px #000000;
 }
+
+.portfolio-container {
+  display: flex;
+  flex-direction: column;
+}

@@ -7,7 +7,7 @@ const bodyParser = require("body-parser"),
       logger = require('morgan'),
       passport = require("passport"),
       path = require('path'),
-      PORT = process.env.PORT,
+      PORT = process.env.PORT || 8080,
       session = require("express-session");
 
 
@@ -54,14 +54,4 @@ app.use("/api", apiRouter);
 process.on('warning', e => console.warn(e.stack));
 
 
-//custom err handling
-app.use(function (req, res, next) {
-  let err = new Error("Not found!");
-  err.status = 404;
-  next(err);
-})
-
-app.use(errorHandler);
-
-app.listen(PORT, () => console.log("app is listening on PORT 8080"))
 module.exports = app;
